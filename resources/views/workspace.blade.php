@@ -15,15 +15,17 @@
 
     <div class="bg-white rounded-md shadow-lg mt-10 py-5 px-7">
         <div class="flex justify-between items-center pb-2 border-b-2">
-            <h1 class="font-bold text-xl">List Ruang Kerja</h1>
+            <h1 class="font-bold text-xl">Daftar Ruang Kerja</h1>
         </div>
-        
+        @if($workspaces->isEmpty())
+            <p class="text-gray-400 flex justify-center py-20 font-semibold">Anda Tidak Memiliki Ruang Kerja</p>
+        @endif
         @foreach ($workspaces as $workspace)  
         <a href="{{ route('task.index', $workspace->id) }}" class="w-full">
             <div class="bg-zinc-800 rounded-md h-28 flex justify-between items-center mt-3 relative hover:bg-zinc-950 cursor-pointer">
                 <div class="flex flex-col justify-center items-start pl-10 w-full h-full rounded-md">
                     <h1 class="text-white font-bold text-xl">{{ $workspace->title }}</h1>
-                    <p class="text-white font-semibold text-sm">Dibuat Pada:{{ $workspace->created_at->format('d-m-Y') }}</p>
+                    <p class="text-white font-semibold text-sm">Dibuat Pada : {{ $workspace->created_at->format('d-m-Y') }}</p>
                 </div>
                 <div class="flex gap-2 absolute right-10">
                     <button onclick="openModalEditWorkspace({{ $workspace->id }}, '{{ $workspace->title }}')" class="bg-white py-2 px-5 rounded-md font-bold">Edit</button>

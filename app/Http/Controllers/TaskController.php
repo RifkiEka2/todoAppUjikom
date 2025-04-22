@@ -13,7 +13,8 @@ class TaskController extends Controller
      */
     public function task(Workspace $workspace)
     {
-        $tasks = Task::where('workspace_id', $workspace->id)->get();
+        $tasks = Task::where('workspace_id', $workspace->id)->orderBy('deadline','asc')->get();
+
         return view('task', compact('workspace', 'tasks'));
     }
 

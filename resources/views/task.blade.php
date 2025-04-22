@@ -12,7 +12,7 @@
 <body class="bg-gray-100 w-3/5 flex flex-col justify-center mx-auto mt-10">
     <div class="shadow-lg w-full rounded-lg h-40 flex flex-col justify-center items-center bg-white">
         <h1 class="font-bold text-3xl">{{ $workspace->title }}</h1>
-        <p class="text-sm font-semibold text-gray-500">Dibuat Pada :{{ $workspace->created_at->format('d-m-Y') }}</p>
+        <p class="text-sm font-semibold text-gray-500">Dibuat Pada : {{ $workspace->created_at->format('d-m-Y') }}</p>
         <div class="flex gap-2">
             <a href="{{ route('workspace.index') }}">
                 <button
@@ -26,9 +26,13 @@
 
     <div class="bg-white rounded-md shadow-lg mt-10 py-5 px-7">
         <div class="flex justify-between items-center pb-2 border-b-2">
-            <h1 class="font-bold text-xl">List Tugas</h1>
+            <h1 class="font-bold text-xl">Daftar Tugas</h1>
         </div>
 
+                
+        @if($tasks->isEmpty())
+            <p class="text-gray-400 flex justify-center py-20 font-semibold">Anda Tidak Memiliki Tugas</p>
+        @endif
         @foreach ($tasks as $task)
             <div class="bg-zinc-800 rounded-md h-32 flex justify-between items-center mt-3 relative hover:bg-zinc-950 ">
                 <form action="{{ route('task.updateStatus', $task->id) }}" method="POST">
@@ -38,11 +42,11 @@
                         {{ $task->status === 'completed' ? 'checked' : '' }} onclick="this.form.submit()">
                 </form>
                 <div class="flex flex-col justify-center items-start pl-7 w-full h-full rounded-md">
-                    <h1 class="text-white font-bold text-2xl {{ $task->status === 'completed' ? 'line-through text-gray-400' : '' }}">
+                    <h1 class="text-white font-bold text-2xl {{ $task->status === 'completed' ? 'line-through text-gray-600' : '' }}">
                         {{ $task->title }}
                     </h1>
-                    <p class="text-white font-semibold text-sm {{ $task->status === 'completed' ? 'line-through text-gray-400' : '' }}">
-                        Tenggat Waktu:{{ $task->deadline->format('d-m-Y') }}
+                    <p class="text-white font-semibold text-sm {{ $task->status === 'completed' ? 'line-through text-gray-600' : '' }}">
+                        Tenggat Waktu : {{ $task->deadline->format('d-m-Y H:i') }}
                     </p>
                     @php
                         $priorityColor = match ($task->priority) {
@@ -85,7 +89,7 @@
                 <!-- Tenggat Waktu -->
                 <div class="mb-4">
                     <label for="deadline" class="block text-gray-700 text-sm font-bold mb-2">Tenggat Waktu:</label>
-                    <input type="date" id="deadline" name="deadline"
+                    <input type="datetime-local" id="deadline" name="deadline"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                         required>
                 </div>
@@ -144,7 +148,7 @@
             <!-- Deadline -->
             <div class="mb-4">
                 <label for="editDeadline" class="block text-gray-700 text-sm font-bold mb-2">Deadline:</label>
-                <input type="date" id="editDeadline" name="deadline" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline" required>
+                <input type="datetime-local" id="editDeadline" name="deadline" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline" required>
             </div>
             
             <!-- Priority -->

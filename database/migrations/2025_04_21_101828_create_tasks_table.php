@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title'); 
-            $table->date('deadline'); 
+            $table->datetime('deadline'); 
             $table->enum('status', ['on_progress', 'completed'])->default('on_progress'); 
             $table->enum('priority', ['rendah', 'sedang', 'tinggi'])->default('sedang');
             $table->foreignId('workspace_id')->constrained()->onDelete('cascade'); 
